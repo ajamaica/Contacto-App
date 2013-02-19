@@ -10,6 +10,7 @@
 #import "SidebarCell.h"
 #import "UIViewController+JASidePanel.h"
 #import "SSMessagesViewController.h"
+#import "AppDelegate.h"
 
 @interface SidebarViewController ()
 
@@ -142,7 +143,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    AppDelegate *appDelegate;
     switch (indexPath.row) {
         case 0:
             self.sidePanelController.centerPanel =[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
@@ -155,7 +156,8 @@
             break;
         case 3:
             [PFUser logOut];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            appDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logout];
             break;
         default:
             break;

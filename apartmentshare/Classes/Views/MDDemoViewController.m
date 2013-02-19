@@ -8,24 +8,26 @@
 
 #import "MDDemoViewController.h"
 #import "SSMessageTableViewCell.h"
+#import "AppDelegate.h"
+
 #define  MAX_ENTRIES_LOADED 25
 @implementation MDDemoViewController{
     NSTimer *timer;
 }
 
-NSString *lorem[] = {
-	@"Hi",
-	@"This is a work in progress",
-	@"Ya I know",
-	@"Fine then\nI see how it is",
-	@"Do you? Do you really?",
-	@"Yes"
-};
+
 
 #pragma mark UIViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadchat:)
+                                                 name:@"reloadchat"
+                                               object:nil];
+
+    
     scroll = FALSE;
     self.chatData  = [[NSMutableArray alloc] init];
     [self loadLocalChat];
@@ -33,21 +35,41 @@ NSString *lorem[] = {
     
 	
 }
+
+-(void)loadView{
+    [super loadView];
+    
+}
+
+-(void)reloadchat:(NSNotification *) notification{
+    [self loadLocalChat];
+}
+
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [timer invalidate];
-    timer = nil;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.chat = @"";
+    //[timer invalidate];
+    //timer = nil;
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    timer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(loadLocalChatNoScroll) userInfo:nil repeats:YES];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.chat = [self.chat objectId];
+    
+    //timer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(loadLocalChatNoScroll) userInfo:nil repeats:YES];
 }
 -(void)sendsms:(id)sender{
     if([[self getText] length] <= 0){
         return;
     }
+    
+    [self.chat saveInBackground];
+    
     PFObject *newMessage = [PFObject objectWithClassName:@"Mensajes"];
     [newMessage setObject:[self getText] forKey:@"mensaje"];
     [newMessage setObject:[PFUser currentUser] forKey:@"sender"];
@@ -55,12 +77,32 @@ NSString *lorem[] = {
     [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(!error){
             
-            PFPush *push = [[PFPush alloc] init];
-            [push setChannel:[NSString stringWithFormat:@"chat_%@",[[self.chat objectForKey:@"seller"] objectId]]];
-            [push setMessage:[newMessage objectForKey:@"mensaje"]];
-            [push sendPushInBackground];
+            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [newMessage objectForKey:@"mensaje"], @"alert",
+                                  [self.chat  objectId], @"p",
+                                  @"",@"sound",
+                                  nil];
             
-            [self loadLocalChat];
+            if([[[self.chat objectForKey:@"seller"] objectId] isEqualToString:[[PFUser currentUser] objectId]]){
+                
+                PFPush *push = [[PFPush alloc] init];
+                [push setChannel:[NSString stringWithFormat:@"chat_%@",[[self.chat objectForKey:@"buyer"] objectId]]];
+                [push setData:data];
+                [push sendPushInBackground];
+                
+                [self loadLocalChat];
+                
+            }else{
+                PFPush *push = [[PFPush alloc] init];
+                [push setChannel:[NSString stringWithFormat:@"chat_%@",[[self.chat objectForKey:@"seller"] objectId]]];
+
+                [push setData:data];
+                [push sendPushInBackground];
+                
+                [self loadLocalChat];
+            }
+            
+            
         }
     }];
     [self clear];

@@ -48,7 +48,14 @@
     [self.contactButton setBackgroundImage:[theme colorButtonBackgroundForState:UIControlStateNormal] forState:UIControlStateNormal];
     [self.contactButton setBackgroundImage:[theme colorButtonBackgroundForState:UIControlStateHighlighted] forState:UIControlStateHighlighted];
     
-    [self.contactButton addTarget:self action:@selector(contactar:) forControlEvents:UIControlEventTouchUpInside];
+
+    if([[[PFUser currentUser] objectId] isEqualToString:[[self.apartment objectForKey:@"user"] objectId]]){
+        [self.contactButton setTitle:@"Tu Vendes este producto" forState:UIControlStateNormal];
+    }else{
+        [self.contactButton addTarget:self action:@selector(contactar:) forControlEvents:UIControlEventTouchUpInside];
+
+    }
+    
     
     CGRect frame = self.moreDetailsTextView.frame;
     frame.size.height = self.moreDetailsTextView.contentSize.height;

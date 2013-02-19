@@ -13,6 +13,7 @@
 @end
 
 @implementation MySidePanelControllerViewController
+@synthesize centralcontroler;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,13 +36,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation addUniqueObject:[NSString stringWithFormat:@"chat_%@",[[PFUser currentUser]objectId]] forKey:@"channels"];
     [currentInstallation saveInBackground];
+    NSString *central = @"centerViewController";
+   
+    if(centralcontroler){
+        central = centralcontroler;
+    }
+    
     [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"leftViewController"]];
-    [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"]];
+    [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:central]];
 }
+
 
 - (void)didReceiveMemoryWarning
 {

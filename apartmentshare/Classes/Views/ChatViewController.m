@@ -76,6 +76,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+        
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -88,6 +89,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -143,23 +145,22 @@
      // If no objects are loaded in memory, we look to the cache first to fill the table
      // and then subsequently do a query against the network.
      if (self.objects.count == 0) {
-         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+         query.cachePolicy = kPFCachePolicyNetworkOnly;
      }
  
-     [query orderByDescending:@"createdAt"];
- 
+     [query orderByDescending:@"updatedAt"];
+     
+     [query includeKey:@"anuncio"];
+     [query includeKey:@"seller"];
+     [query includeKey:@"buyer"];
+     
      return query;
  }
 
 
 -(void)objectsDidLoad:(NSError *)error{
     [super objectsDidLoad:error];
-    if(!error){
-        for (PFObject *obj in self.objects) {
-            [[obj objectForKey:@"anuncio"] fetchIfNeeded];
-            [[obj objectForKey:@"seller"] fetchIfNeeded];
-        }
-    }
+    
 }
 
  // Override to customize the look of a cell representing an object. The default is to display
@@ -173,9 +174,19 @@
      if (cell == nil) {
          cell = [[MensajesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
      }
- 
-     cell.titulo.text = [[object objectForKey:@"anuncio"] objectForKey:@"title"];
-     cell.description.text = [[object objectForKey:@"seller"] objectForKey:@"username"];
+     [[object objectForKey:@"anuncio"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+         cell.titulo.text = [object objectForKey:@"title"];
+     }];
+
+     if([[[PFUser currentUser] objectId] isEqualToString:[[object objectForKey:@"seller"] objectId]]){
+         
+         cell.description.text = [NSString stringWithFormat:@"%@",[[object objectForKey:@"buyer"] objectForKey:@"username"]];
+         
+     }else{
+         cell.description.text = [NSString stringWithFormat:@"%@",[[object objectForKey:@"seller"] objectForKey:@"username"]];
+     }
+     
+          
      PFFile *f = [[object objectForKey:@"anuncio"] objectForKey:@"imagen"];
      [cell.imagen setImageWithURL:[NSURL URLWithString: f.url]];
      
@@ -211,24 +222,27 @@
 
 #pragma mark - UITableViewDataSource
 
-/*
+
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
  // Return NO if you do not want the specified item to be editable.
- return YES;
+     return YES;
  }
- */
+ 
 
-/*
+
  // Override to support editing the table view.
  - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the object from Parse and reload the table view
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, and save it to Parse
+     if (editingStyle == UITableViewCellEditingStyleDelete) {
+         PFObject *ob = [self.objects objectAtIndex:indexPath.row];
+         [ob deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+             [self loadObjects];
+         }];
+     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+         // Create a new instance of the appropriate class, and save it to Parse
+     }
  }
- }
- */
+ 
 
 /*
  // Override to support rearranging the table view.

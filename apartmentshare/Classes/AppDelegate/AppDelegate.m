@@ -9,11 +9,17 @@
 #import "AppDelegate.h"
 #import "ADVTheme.h"
 #import "MPNotificationView.h"
+#import "MySidePanelControllerViewController.h"
 
 @implementation AppDelegate
 
+
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
     [ADVThemeManager customizeAppAppearance];
     [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
                   clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
@@ -30,18 +36,59 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
     
+    NSDictionary *notifPayload =
+    [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    
+    if(notifPayload){
+        // Create empty photo object
+        NSString *photoId = [notifPayload objectForKey:@"p"];
+        PFObject *targetPhoto = [PFObject objectWithoutDataWithClassName:@"Chat"
+                                                            objectId:photoId];
+    
+       
+        
+        // Fetch photo object
+        [targetPhoto fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        // Show photo view controller
+            if (!error && [PFUser currentUser]) {
+                
+                MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
+                [ms setCentralcontroler:@"chatnav"];
+                
+                self.window.rootViewController = ms;
+                
+            }
+        }];
+    
+    }
+    
+    if([PFUser currentUser]){
+        
+        self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
+    }
     return YES;
 }
+
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     
-    [MPNotificationView notifyWithText:@"Nuevo mensaje en una venta"
-                                detail:[[userInfo objectForKey:@"aps"] objectForKey:@"alert" ]
-                                 image:[UIImage imageNamed:@"57.png"]
-                           andDuration:2.0];
-
+   [[NSNotificationCenter defaultCenter] postNotificationName: @"reloadchat" object:nil userInfo:userInfo];
+    
+    if([self.chat isEqualToString:[userInfo objectForKey:@"p"]]){
+        return;
+    }
+    
+    [MPNotificationView notifyWithText:@"Nuevo mensaje en una venta" detail:[[userInfo objectForKey:@"aps"] objectForKey:@"alert" ] image:[UIImage imageNamed:@"57.png"] duration:2.0 andTouchBlock:^(MPNotificationView *notificationView) {
+        MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
+            [ms setCentralcontroler:@"chatnav"];
+        
+            self.window.rootViewController = ms;
+        
+    }];
+    
 
 }
 
@@ -54,6 +101,10 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     [currentInstallation saveInBackground];
 }
 
+-(void)logout{
+    
+    self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"incio"];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

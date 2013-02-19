@@ -14,5 +14,6 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (assign, nonatomic) BOOL isLoggedIn;
-
+@property (assign, nonatomic) NSString *chat;
+-(void)logout;
 @end
