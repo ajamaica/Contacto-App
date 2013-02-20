@@ -93,7 +93,7 @@
 
     [self.sendButton setEnabled:NO];
     
-    [self.chat saveInBackground];
+    
     
     PFObject *newMessage = [PFObject objectWithClassName:@"Mensajes"];
     [newMessage setObject:[self getText] forKey:@"mensaje"];
@@ -104,14 +104,14 @@
         [actIndicator setHidden:YES];
         [actIndicator removeFromSuperview];
         if(!error){
-            
-            
-            
+                        
             NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [newMessage objectForKey:@"mensaje"], @"alert",
                                   [self.chat  objectId], @"p",
                                   @"alert.wav",@"sound",
                                   nil];
+            
+            [self.chat setObject:[newMessage objectForKey:@"mensaje"] forKey:@"last_ms"];
             
             if([[[self.chat objectForKey:@"seller"] objectId] isEqualToString:[[PFUser currentUser] objectId]]){
                 
@@ -119,8 +119,10 @@
                 [push setChannel:[NSString stringWithFormat:@"chat_%@",[[self.chat objectForKey:@"buyer"] objectId]]];
                 [push setData:data];
                 [push sendPushInBackground];
-                
                 [self loadLocalChat];
+                
+                
+                [self.chat setObject:[self.chat objectForKey:@"seller"] forKey:@"last_usr"];
                 
             }else{
                 PFPush *push = [[PFPush alloc] init];
@@ -129,8 +131,13 @@
                 [push setData:data];
                 [push sendPushInBackground];
                 
+                [self.chat setObject:[self.chat objectForKey:@"buyer"] forKey:@"last_usr"];
+
                 [self loadLocalChat];
+                
             }
+            
+            [self.chat saveInBackground];
             
             
         }

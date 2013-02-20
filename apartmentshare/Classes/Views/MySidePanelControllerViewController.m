@@ -37,6 +37,15 @@
 {
     [super viewDidLoad];
     
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            PFUser *u = [PFUser currentUser];
+            [u setObject:geoPoint forKey:@"location"];
+            [u saveInBackground];
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"reload" object:nil userInfo:nil];
+        }
+    }];
+    
 	// Do any additional setup after loading the view.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation addUniqueObject:[NSString stringWithFormat:@"chat_%@",[[PFUser currentUser]objectId]] forKey:@"channels"];

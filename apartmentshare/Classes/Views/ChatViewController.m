@@ -104,6 +104,8 @@
     [self.tableView setBackgroundView:noiseView];
     self.title = @"Mensajes";
     
+    [self loadObjects];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -193,12 +195,12 @@
          cell.titulo.text = [object objectForKey:@"title"];
      }];
 
-     if([[[PFUser currentUser] objectId] isEqualToString:[[object objectForKey:@"seller"] objectId]]){
+     if([[[PFUser currentUser] objectId] isEqualToString:[[object objectForKey:@"last_usr"] objectId]]){
          
-         cell.description.text = [NSString stringWithFormat:@"%@",[[object objectForKey:@"buyer"] objectForKey:@"username"]];
+         cell.description.text = [NSString stringWithFormat:@"➡ %@",[object objectForKey:@"last_ms"]];
          
      }else{
-         cell.description.text = [NSString stringWithFormat:@"%@",[[object objectForKey:@"seller"] objectForKey:@"username"]];
+         cell.description.text = [NSString stringWithFormat:@"⬅ %@",[object objectForKey:@"last_ms"]];
      }
      
           
@@ -282,7 +284,16 @@
     
     MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
     [chatviewcontroller setChat:[self.objects objectAtIndex:indexPath.row]];
-    chatviewcontroller.title = [[[self.objects objectAtIndex:indexPath.row] objectForKey:@"anuncio"] objectForKey:@"title"];
+    PFObject *object = [self.objects objectAtIndex:indexPath.row];
+    
+    if([[[PFUser currentUser] objectId] isEqualToString:[[object objectForKey:@"seller"] objectId]]){
+        
+        chatviewcontroller.title = [NSString stringWithFormat:@"%@",[[object objectForKey:@"buyer"] objectForKey:@"username"]];
+        
+    }else{
+        chatviewcontroller.title = [NSString stringWithFormat:@"%@",[[object objectForKey:@"seller"] objectForKey:@"username"]];
+    }
+    
     [self.navigationController pushViewController:chatviewcontroller animated:YES];
 }
 @end

@@ -275,7 +275,7 @@ typedef enum {
         UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
         imgPicker.delegate = self;
         imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
+        imgPicker.allowsEditing = YES;
         [self.navigationController presentViewController:imgPicker animated:YES completion:nil];
         
     } else if (buttonIndex == 1) {
@@ -397,11 +397,40 @@ typedef enum {
     
     [picker dismissModalViewControllerAnimated:YES];
     
-    //Place the image in the imageview
-    NSData * data = UIImageJPEGRepresentation(img, 0.4);
-    [data writeToFile:@"foo.jpeg" atomically:YES];
     
-    self.uploadImageView.image = img;
+    
+    //Place the image in the imageview
+        
+    
+    float actualHeight = img.size.height;
+    float actualWidth = img.size.width;
+    float imgRatio = actualWidth/actualHeight;
+    float maxRatio = 320.0*1.5/480.0*1.5;
+    
+    if(imgRatio!=maxRatio){
+        if(imgRatio < maxRatio){
+            imgRatio = 480.0*1.5 / actualHeight;
+            actualWidth = imgRatio * actualWidth;
+            actualHeight = 480.0 *1.5;
+        }
+        else{
+            imgRatio = 320.0*1.5 / actualWidth;
+            actualHeight = imgRatio * actualHeight;
+            actualWidth = 320.0*1.5;
+        }
+    }
+    CGRect rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+    UIGraphicsBeginImageContext(rect.size);
+    [img drawInRect:rect];
+    UIImage *imgs = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    NSData * data = UIImageJPEGRepresentation(imgs, 0.7);
+    [data writeToFile:@"foo.jpeg" atomically:YES];
+
+    
+    self.uploadImageView.image = imgs;
     
     photo = [PFFile fileWithName:@"image" data:data];
     

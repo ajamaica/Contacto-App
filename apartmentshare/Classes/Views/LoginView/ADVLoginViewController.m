@@ -12,6 +12,7 @@
 #import "ADVTheme.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
+#import "KGNoise.h"
 
 @implementation ADVLoginViewController
 
@@ -51,6 +52,7 @@
     id <ADVTheme> theme = [ADVThemeManager sharedTheme];
     
     
+    
     self.title = @"Login";
     
     self.loginTableView = [[UITableView alloc] initWithFrame:CGRectMake(16, 50, 294, 110) style:UITableViewStyleGrouped];
@@ -82,7 +84,11 @@
     [self.passwordTextField setSecureTextEntry:YES];
     [self.passwordTextField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     
-    
+    KGNoiseRadialGradientView *noiseView = [[KGNoiseRadialGradientView alloc] initWithFrame:self.parentViewController.view.frame];
+    noiseView.backgroundColor = [UIColor colorWithRed:0.814 green:0.798 blue:0.747 alpha:1.000];
+    noiseView.alternateBackgroundColor = [UIColor colorWithRed:1.000 green:0.986 blue:0.945 alpha:1.000];
+    noiseView.noiseOpacity = 0.3;
+    [self.view insertSubview:noiseView atIndex:0];
     
 }
 
@@ -99,7 +105,7 @@
 
         
     }
-    
+
     
 }
 

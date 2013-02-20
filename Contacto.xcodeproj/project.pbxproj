@@ -71,6 +71,7 @@
 		8131072716D355DD00CB2D28 /* 38.png in Resources */ = {isa = PBXBuildFile; fileRef = 8131072616D355DD00CB2D28 /* 38.png */; };
 		8131072916D355E900CB2D28 /* 38@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8131072816D355E900CB2D28 /* 38@2x.png */; };
 		8131072B16D49B8F00CB2D28 /* alert.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8131072A16D49B8F00CB2D28 /* alert.wav */; };
+		8131072D16D5334B00CB2D28 /* cellimg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8131072C16D5334B00CB2D28 /* cellimg.png */; };
 		814A23D116CE8DC000A14078 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814A23D016CE8DC000A14078 /* Parse.framework */; };
 		814A23D316CEB0CD00A14078 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814A23D216CEB0CD00A14078 /* AudioToolbox.framework */; };
 		814A23D516CEB0D300A14078 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814A23D416CEB0D300A14078 /* Accounts.framework */; };
@@ -276,6 +277,7 @@
 		8131072616D355DD00CB2D28 /* 38.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 38.png; sourceTree = "<group>"; };
 		8131072816D355E900CB2D28 /* 38@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38@2x.png"; sourceTree = "<group>"; };
 		8131072A16D49B8F00CB2D28 /* alert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = alert.wav; sourceTree = "<group>"; };
+		8131072C16D5334B00CB2D28 /* cellimg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellimg.png; sourceTree = "<group>"; };
 		814A23D016CE8DC000A14078 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		814A23D216CEB0CD00A14078 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		814A23D416CEB0D300A14078 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -590,6 +592,7 @@
 		7F2EEEF516BC7BC80001A98B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8131072C16D5334B00CB2D28 /* cellimg.png */,
 				8131072A16D49B8F00CB2D28 /* alert.wav */,
 				8131072816D355E900CB2D28 /* 38@2x.png */,
 				8131072616D355DD00CB2D28 /* 38.png */,
@@ -1147,6 +1150,7 @@
 				8131072716D355DD00CB2D28 /* 38.png in Resources */,
 				8131072916D355E900CB2D28 /* 38@2x.png in Resources */,
 				8131072B16D49B8F00CB2D28 /* alert.wav in Resources */,
+				8131072D16D5334B00CB2D28 /* cellimg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

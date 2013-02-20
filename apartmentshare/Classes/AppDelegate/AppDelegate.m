@@ -24,15 +24,7 @@
     [ADVThemeManager customizeAppAppearance];
     [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
                   clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
-    
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            PFUser *u = [PFUser currentUser];
-            [u setObject:geoPoint forKey:@"location"];
-            [u saveInBackground];
-        }
-    }];
-    
+  
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 

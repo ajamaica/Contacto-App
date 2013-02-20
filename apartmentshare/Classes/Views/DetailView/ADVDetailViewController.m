@@ -50,7 +50,7 @@
     
 
     if([[[PFUser currentUser] objectId] isEqualToString:[[self.apartment objectForKey:@"user"] objectId]]){
-        [self.contactButton setTitle:@"Tu Vendes este producto" forState:UIControlStateNormal];
+        [self.contactButton setTitle:@"Tu vendes este producto" forState:UIControlStateNormal];
     }else{
         [self.contactButton addTarget:self action:@selector(contactar:) forControlEvents:UIControlEventTouchUpInside];
 

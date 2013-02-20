@@ -17,6 +17,7 @@
 #import "ADVTheme.h"
 #import "KGNoise.h"
 #import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
 
 @interface ADVApartmentListViewController () {
     NSNumber *latestDate;
@@ -122,7 +123,7 @@
     [self.apartmentTableView setDataSource:self];
     
     self.apartmentImages = [NSMutableDictionary dictionary];
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
 }
 
@@ -133,7 +134,10 @@
 }
 
 - (void) receiveTestNotification:(NSNotification *) notification{
-
+     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    objects = [NSArray new];
+    [self.apartmentTableView reloadData];
+    
     NSDictionary *userInfo = notification.userInfo;
     category = [userInfo objectForKey:@"object"];
     
@@ -191,6 +195,7 @@
 
 - (void)doquery{
     PFQuery *query = [PFQuery queryWithClassName:@"Anuncio"];
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     NSString *className = NSStringFromClass([self class]);
     if(category){
         [query whereKey:@"category" equalTo:category];
@@ -213,6 +218,7 @@
     [query orderByDescending:@"createdAt"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *obj, NSError *error) {
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (!error) {
             loading = FALSE;
             objects = obj;
