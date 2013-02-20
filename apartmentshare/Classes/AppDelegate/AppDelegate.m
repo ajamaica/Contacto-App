@@ -10,6 +10,7 @@
 #import "ADVTheme.h"
 #import "MPNotificationView.h"
 #import "MySidePanelControllerViewController.h"
+#import "MDDemoViewController.h"
 
 @implementation AppDelegate
 
@@ -56,7 +57,12 @@
                 MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
                 [ms setCentralcontroler:@"chatnav"];
                 
-                self.window.rootViewController = ms;
+                MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
+                [chatviewcontroller setChat:targetPhoto];
+                chatviewcontroller.title = @"Chat";
+                [ms.centerPanel.navigationController pushViewController:chatviewcontroller animated:YES];
+                
+                self.window.rootViewController =  ms;
                 
             }
         }];

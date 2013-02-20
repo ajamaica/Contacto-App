@@ -179,10 +179,20 @@ CGFloat kInputHeight = 40.0f;
 	[UIView setAnimationDuration:0.3f];
 	_tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 216.0f, 0.0f);
 	_tableView.scrollIndicatorInsets = _tableView.contentInset;
+    
+    
+    if([self.chatData count]>0){
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:0] - 1) inSection:0];
+        [_tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        
+    }
+    
 	_inputBackgroundView.frame = CGRectMake(0.0f, height-320.0f, self.view.frame.size.width, kInputHeight);
 	[_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[UIView commitAnimations];
+    
 }
+
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -195,5 +205,8 @@ CGFloat kInputHeight = 40.0f;
 	[_sendButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.4f] forState:UIControlStateNormal];
 	[UIView commitAnimations];
 }
+
+
+
 
 @end

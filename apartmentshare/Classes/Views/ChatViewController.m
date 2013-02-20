@@ -10,6 +10,7 @@
 #import "MDDemoViewController.h"
 #import "MensajesCell.h"
 #import "UIImageView+WebCache.h"
+#import "KGNoise.h"
 
 @interface ChatViewController ()
 
@@ -76,7 +77,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-        
+ 
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -88,15 +90,26 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    KGNoiseRadialGradientView *noiseView = [[KGNoiseRadialGradientView alloc] initWithFrame:self.view.frame];
+    noiseView.backgroundColor = [UIColor colorWithRed:0.814 green:0.798 blue:0.747 alpha:1.000];
+    noiseView.alternateBackgroundColor = [UIColor colorWithRed:1.000 green:0.986 blue:0.945 alpha:1.000];
+    noiseView.noiseOpacity = 0.3;
+    [self.tableView setBackgroundView:noiseView];
+    self.title = @"Mensajes";
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+  
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -168,6 +181,8 @@
  // and the imageView being the imageKey in the object.
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
      
+     
+     
      static NSString *CellIdentifier = @"MensajeCell";
  
      MensajesCell *cell = (MensajesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -192,6 +207,8 @@
      
      return cell;
  }
+
+
  
 
 /*
@@ -265,7 +282,7 @@
     
     MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
     [chatviewcontroller setChat:[self.objects objectAtIndex:indexPath.row]];
-    chatviewcontroller.title = [NSString stringWithFormat:@"Chat"];
+    chatviewcontroller.title = [[[self.objects objectAtIndex:indexPath.row] objectForKey:@"anuncio"] objectForKey:@"title"];
     [self.navigationController pushViewController:chatviewcontroller animated:YES];
 }
 @end

@@ -11,6 +11,7 @@
 #import "UIViewController+JASidePanel.h"
 #import "SSMessagesViewController.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SidebarViewController ()
 
@@ -73,27 +74,35 @@
         case 0:
             cell.title.text = @"Listado";
             cell.uiimage.image = [UIImage imageNamed:@"32.png"];
+            [cell.notification setHidden:YES];
             break;
         case 1:
             cell.title.text = @"Mis Anuncios";
             cell.uiimage.image = [UIImage imageNamed:@"36.png"];
+            [cell.notification setHidden:YES];
             break;
         case 2:
             cell.title.text = @"Mis Mensajes";
             cell.uiimage.image = [UIImage imageNamed:@"31.png"];
+            [cell.notification.layer setCornerRadius:10.0f];
+            [cell.notification.layer setMasksToBounds:YES];
             break;
         case 3:
             cell.title.text = @"Salir";
             cell.uiimage.image = [UIImage imageNamed:@"4.png"];
+            [cell.notification setHidden:YES];
             break;
         case 5:
             cell.title.text = @"Mis Datos";
             cell.uiimage.image = [UIImage imageNamed:@"32.png"];
+            [cell.notification setHidden:YES];
             break;
 
         default:
             break;
     }
+    
+    
     
     return cell;
 }
@@ -144,6 +153,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AppDelegate *appDelegate;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+
     switch (indexPath.row) {
         case 0:
             self.sidePanelController.centerPanel =[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
@@ -156,6 +167,8 @@
             break;
         case 3:
             [PFUser logOut];
+            currentInstallation.channels = [NSArray array];
+            [currentInstallation saveEventually];
             appDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
             [appDelegate logout];
             break;

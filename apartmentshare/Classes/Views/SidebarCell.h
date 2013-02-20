@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface SidebarCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UIImageView *uiimage;
+@property (weak, nonatomic) IBOutlet UIView *notification;
+@property (weak, nonatomic) IBOutlet UILabel *number;
 
 @end

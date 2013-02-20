@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "apartmentshare/Classes/Views/MDDemoViewController.m"
-         timestampString = "382979734.121942"
+         filePath = "apartmentshare/Classes/Views/SidebarCell.m"
+         timestampString = "383029484.028919"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
-         landmarkName = "-reloadchat:"
+         startingLineNumber = "17"
+         endingLineNumber = "17"
+         landmarkName = "-initWithStyle:reuseIdentifier:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

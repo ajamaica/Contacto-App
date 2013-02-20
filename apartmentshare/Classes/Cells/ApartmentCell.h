@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) IBOutlet UILabel* apartmentTypeLabel;
 
-@property (nonatomic, strong) IBOutlet UIImageView* apartmentImageView;
+@property (nonatomic, strong) IBOutlet PFImageView* apartmentImageView;
 
 @property (nonatomic, strong) IBOutlet UIView* shadowView;
 

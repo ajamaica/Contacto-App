@@ -9,10 +9,16 @@
 #import "MDDemoViewController.h"
 #import "SSMessageTableViewCell.h"
 #import "AppDelegate.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import "MBProgressHUD.h"
 
 #define  MAX_ENTRIES_LOADED 25
+
 @implementation MDDemoViewController{
     NSTimer *timer;
+    UIActivityIndicatorView *actIndicator;
+    int antes;
+    BOOL primera;
 }
 
 
@@ -21,7 +27,8 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    
+    primera = FALSE;
+    antes = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadchat:)
                                                  name:@"reloadchat"
@@ -32,9 +39,13 @@
     self.chatData  = [[NSMutableArray alloc] init];
     [self loadLocalChat];
     [self.sendButton addTarget:self action:@selector(sendsms:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self.sendButton setTitle:@"" forState:UIControlStateDisabled];
 	
-}
+    actIndicator= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    actIndicator.tag = 123456;
+    [actIndicator startAnimating];
+    actIndicator.frame = CGRectMake(18, 3, 20, 20);
+    }
 
 -(void)loadView{
     [super loadView];
@@ -63,10 +74,24 @@
     
     //timer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(loadLocalChatNoScroll) userInfo:nil repeats:YES];
 }
+
+-(void) playSound {
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"alert" ofType:@"wav"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+    AudioServicesPlaySystemSound (soundID);
+    //[soundPath release];
+}
+
 -(void)sendsms:(id)sender{
     if([[self getText] length] <= 0){
         return;
     }
+    
+    [self.sendButton addSubview:actIndicator];
+    
+
+    [self.sendButton setEnabled:NO];
     
     [self.chat saveInBackground];
     
@@ -75,12 +100,17 @@
     [newMessage setObject:[PFUser currentUser] forKey:@"sender"];
     [newMessage setObject:self.chat forKey:@"chat"];
     [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self.sendButton setEnabled:YES];
+        [actIndicator setHidden:YES];
+        [actIndicator removeFromSuperview];
         if(!error){
+            
+            
             
             NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [newMessage objectForKey:@"mensaje"], @"alert",
                                   [self.chat  objectId], @"p",
-                                  @"",@"sound",
+                                  @"alert.wav",@"sound",
                                   nil];
             
             if([[[self.chat objectForKey:@"seller"] objectId] isEqualToString:[[PFUser currentUser] objectId]]){
@@ -113,18 +143,31 @@
 
 - (void)loadLocalChat
 {
+    antes = [self.chatData count];
+    
+    if (!primera) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Mensajes"];
     [query whereKey:@"chat" equalTo:self.chat];
     
     // If no objects are loaded in memory, we look to the cache first to fill the table
     // and then subsequently do a query against the network.
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        query.cachePolicy = kPFCachePolicyNetworkOnly;
         [query orderByAscending:@"createdAt"];
         NSLog(@"Trying to retrieve from cache");
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
+                
+                
+                if((primera) && (antes != [self.chatData count])){
+                    [self playSound];
+                }
+                
+                primera = TRUE;
                 // The find succeeded.
-                NSLog(@"Successfully retrieved %d chats from cache.", objects.count);
+
                 [self.chatData removeAllObjects];
                 [self.chatData addObjectsFromArray:objects];
                 [self.tableView reloadData];
@@ -133,6 +176,10 @@
                     [self.tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
                 
                 }
+                antes = [self.chatData count];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+               
+                
             } else {
                 // Log details of the failure
                 NSLog(@"Error: %@ %@", error, [error userInfo]);

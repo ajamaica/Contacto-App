@@ -128,6 +128,7 @@
 
 - (void)handleRefresh:(id)sender
 {
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Cargando..."];
     [self doquery];
 }
 
@@ -221,13 +222,13 @@
             
         }
     }];
-    
+    /*
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     [locationManager startUpdatingLocation];
-
+     */
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
