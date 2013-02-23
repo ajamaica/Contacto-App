@@ -11,6 +11,7 @@
 #import "MPNotificationView.h"
 #import "MySidePanelControllerViewController.h"
 #import "MDDemoViewController.h"
+#import "JASidePanelController.h"
 
 @implementation AppDelegate
 
@@ -22,10 +23,16 @@
     
     
     [ADVThemeManager customizeAppAppearance];
+    
+    [Socialize storeConsumerKey:@"945ba670-6934-4192-a08e-ee1860af9096"];
+    [Socialize storeConsumerSecret:@"807b3c94-a371-42e7-a111-a071fd5ca6dd"];
+    [Socialize storeAnonymousAllowed:YES];
+    
     [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
                   clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
   
-    
+   
+
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
     
@@ -33,9 +40,13 @@
     [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
     
-    if(notifPayload){
+    if([Socialize handleNotification:notifPayload]){
+    
+    }else{
         // Create empty photo object
         NSString *photoId = [notifPayload objectForKey:@"p"];
+        
+        if(photoId){
         PFObject *targetPhoto = [PFObject objectWithoutDataWithClassName:@"Chat"
                                                             objectId:photoId];
     
@@ -47,23 +58,44 @@
             if (!error && [PFUser currentUser]) {
                 
                 MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
-                [ms setCentralcontroler:@"chatnav"];
+                
+                UINavigationController *c = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"chatnav"];
                 
                 MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
                 [chatviewcontroller setChat:targetPhoto];
                 chatviewcontroller.title = @"Chat";
-                [ms.centerPanel.navigationController pushViewController:chatviewcontroller animated:YES];
                 
+                [c pushViewController:chatviewcontroller animated:YES];
+                [ms setCentralcontroler:c];
+                
+                
+                              
                 self.window.rootViewController =  ms;
                 
             }
         }];
-    
+        }
+
     }
+    
+    [Socialize setEntityLoaderBlock:^(UINavigationController *navigationController, id<SocializeEntity>entity) {
+        
+        SampleEntityLoader *entityLoader = [[SampleEntityLoader alloc] initWithEntity:entity];
+        
+        if (navigationController == nil) {
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:entityLoader];
+            [self.window.rootViewController presentModalViewController:navigationController animated:YES];
+        } else {
+            [navigationController pushViewController:entityLoader animated:YES];
+        }
+    }];
+
     
     if([PFUser currentUser]){
         
         self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
+        
+                
     }
     return YES;
 }
@@ -73,19 +105,66 @@
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     
+    if ([Socialize handleNotification:userInfo]) {
+        return;
+    }
+    
    [[NSNotificationCenter defaultCenter] postNotificationName: @"reloadchat" object:nil userInfo:userInfo];
     
     if([self.chat isEqualToString:[userInfo objectForKey:@"p"]]){
         return;
     }
     
-    [MPNotificationView notifyWithText:@"Nuevo mensaje en una venta" detail:[[userInfo objectForKey:@"aps"] objectForKey:@"alert" ] image:[UIImage imageNamed:@"57.png"] duration:2.0 andTouchBlock:^(MPNotificationView *notificationView) {
-        MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
-            [ms setCentralcontroler:@"chatnav"];
+    
+    
+    NSString *photoId = [userInfo objectForKey:@"p"];
+    
+    if(photoId){
+        PFObject *targetPhoto = [PFObject objectWithoutDataWithClassName:@"Chat"
+                                                                objectId:photoId];
         
-            self.window.rootViewController = ms;
         
-    }];
+        
+        // Fetch photo object
+        [targetPhoto fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            // Show photo view controller
+            if (!error && [PFUser currentUser]) {
+                
+                
+                [MPNotificationView notifyWithText:@"Nuevo mensaje en una venta" detail:[[userInfo objectForKey:@"aps"] objectForKey:@"alert" ] image:[UIImage imageNamed:@"57.png"] duration:2.0 andTouchBlock:^(MPNotificationView *notificationView) {
+                    
+                    if (!error && [PFUser currentUser]) {
+                        
+                        MySidePanelControllerViewController *ms = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"sidepanels"];
+                        
+                        UINavigationController *c = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"chatnav"];
+                        
+                        MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
+                        [chatviewcontroller setChat:targetPhoto];
+                        chatviewcontroller.title = @"Chat";
+                        
+                        [c pushViewController:chatviewcontroller animated:YES];
+                        [ms setCentralcontroler:c];
+                        
+                        
+                        
+                        self.window.rootViewController =  ms;
+                        
+                    }
+
+                   
+                    
+                    
+                }];
+                
+                
+                
+                
+            }
+        }];
+    }
+    
+    
     
 
 }

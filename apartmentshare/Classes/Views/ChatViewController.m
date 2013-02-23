@@ -120,6 +120,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -296,4 +297,6 @@
     
     [self.navigationController pushViewController:chatviewcontroller animated:YES];
 }
+
+
 @end

@@ -13,7 +13,11 @@
 
 @interface ADVDetailViewController : UIViewController<ASMediasFocusDelegate>
 
+@property (nonatomic, retain) SZActionBar *actionBar;
+@property (nonatomic, retain) id<SZEntity> entity;
+
 @property (strong, nonatomic) ASMediaFocusManager *mediaFocusManager;
+@property (weak, nonatomic) IBOutlet UILabel *user;
 
 @property (nonatomic, weak) IBOutlet UILabel* addressLabel;
 

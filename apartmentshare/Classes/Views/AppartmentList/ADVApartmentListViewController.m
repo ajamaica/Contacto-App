@@ -203,7 +203,7 @@
     [query whereKey:@"Vendido" equalTo:[NSNumber numberWithBool:NO]];
     
     [query whereKey:@"Eliminado" notEqualTo:[NSNumber numberWithBool:YES]];
-    
+    [query includeKey:@"user"];
     
     if([className isEqualToString:@"MisAnunciosViewController"]){
         [query whereKey:@"user" equalTo:[PFUser currentUser]];
@@ -315,7 +315,7 @@
     if([[[anuncio objectForKey:@"category"] objectId] isEqualToString:@"B5HNeL8Clg"]){
         [cell.apartmentTypeLabel setText:@"Varios"];
     }
-    
+    cell.name.text = [[anuncio objectForKey:@"user"] objectForKey:@"username"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
 
@@ -509,5 +509,9 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     [errorAlertView show];
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

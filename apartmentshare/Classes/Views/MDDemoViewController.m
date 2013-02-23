@@ -29,10 +29,7 @@
 	[super viewDidLoad];
     primera = FALSE;
     antes = 0;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadchat:)
-                                                 name:@"reloadchat"
-                                               object:nil];
+    
 
     
     scroll = FALSE;
@@ -61,16 +58,23 @@
     [super viewWillDisappear:animated];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.chat = @"";
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     //[timer invalidate];
     //timer = nil;
     
 }
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.chat = [self.chat objectId];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadchat:)
+                                                 name:@"reloadchat"
+                                               object:nil];
     
     //timer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(loadLocalChatNoScroll) userInfo:nil repeats:YES];
 }

@@ -37,6 +37,21 @@
 {
     [super viewDidLoad];
     
+    // Specify a new image and description for the current user
+    SZUserSettings *settings = [SZUserUtils currentUserSettings];
+    settings.firstName = [PFUser currentUser].username;
+    
+    // Update the server
+    [SZUserUtils saveUserSettings:settings success:^(SZUserSettings *settings, id<SocializeFullUser> updatedUser) {
+        PFUser *pf = [PFUser currentUser];
+        [pf setUsername:settings.firstName];
+        [pf saveEventually];
+        NSLog(@"Saved user %d", [updatedUser objectID]);
+    } failure:^(NSError *error) {
+        NSLog(@"Broke: %@", [error localizedDescription]);
+    }];
+
+    
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             PFUser *u = [PFUser currentUser];
@@ -50,14 +65,15 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation addUniqueObject:[NSString stringWithFormat:@"chat_%@",[[PFUser currentUser]objectId]] forKey:@"channels"];
     [currentInstallation saveInBackground];
-    NSString *central = @"centerViewController";
    
     if(centralcontroler){
-        central = centralcontroler;
+        [self setCenterPanel:centralcontroler];
+    }else{
+        [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"]];
+
     }
     
     [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"leftViewController"]];
-    [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:central]];
 }
 
 

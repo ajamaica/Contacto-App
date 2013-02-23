@@ -53,6 +53,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -199,5 +200,6 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName: @"close" object:nil userInfo:userInfo];
 }
+
 
 @end

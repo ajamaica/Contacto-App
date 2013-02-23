@@ -28,6 +28,37 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.actionBar == nil) {
+        PFFile *file = [self.apartment objectForKey:@"imagen"];
+        
+        self.entity = [SZEntity entityWithKey:[self.apartment objectId] name:@"Anuncio"];
+
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [self.apartment objectForKey:@"title"], @"szsd_title",
+                                [self.apartment objectForKey:@"details"], @"szsd_description",
+                                file.url, @"szsd_thumb",
+                                nil];
+        
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
+        NSAssert(error == nil, @"Error writing json: %@", [error localizedDescription]);
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        self.entity.meta = jsonString;
+        
+        
+        self.actionBar = [SZActionBarUtils showActionBarWithViewController:self entity:self.entity options:nil];
+        SZActionButton *btn = [SZActionButton viewsButton];
+        [btn.actualButton removeFromSuperview];
+        self.actionBar.itemsLeft = [NSArray arrayWithObjects:btn,nil];
+        
+        
+    }
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,6 +86,9 @@
         [self.contactButton addTarget:self action:@selector(contactar:) forControlEvents:UIControlEventTouchUpInside];
 
     }
+    [[self.apartment objectForKey:@"user"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        self.user.text = [object objectForKey:@"username"];
+    }];
     
     
     CGRect frame = self.moreDetailsTextView.frame;

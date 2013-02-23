@@ -16,5 +16,5 @@
     #define MR_SHORTHAND
     #import <Parse/Parse.h>
     #import "JSNotifier.h"
-
+    #import <Socialize/Socialize.h>
 #endif

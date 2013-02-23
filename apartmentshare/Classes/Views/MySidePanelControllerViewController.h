@@ -10,6 +10,6 @@
 
 @interface MySidePanelControllerViewController : JASidePanelController
 
-@property (nonatomic, strong) NSString *centralcontroler;
+@property (nonatomic, strong) UIViewController *centralcontroler;
 
 @end

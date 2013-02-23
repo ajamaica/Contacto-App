@@ -62,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,22 +72,27 @@
     
     switch (indexPath.row) {
         case 0:
-            cell.title.text = @"Listado";
+            cell.title.text = @"Preferencias";
             cell.uiimage.image = [UIImage imageNamed:@"32.png"];
             [cell.notification setHidden:YES];
             break;
         case 1:
+            cell.title.text = @"Listado";
+            cell.uiimage.image = [UIImage imageNamed:@"32.png"];
+            [cell.notification setHidden:YES];
+            break;
+        case 2:
             cell.title.text = @"Mis Anuncios";
             cell.uiimage.image = [UIImage imageNamed:@"36.png"];
             [cell.notification setHidden:YES];
             break;
-        case 2:
+        case 3:
             cell.title.text = @"Mis Mensajes";
             cell.uiimage.image = [UIImage imageNamed:@"31.png"];
             [cell.notification.layer setCornerRadius:10.0f];
             [cell.notification.layer setMasksToBounds:YES];
             break;
-        case 3:
+        case 4:
             cell.title.text = @"Salir";
             cell.uiimage.image = [UIImage imageNamed:@"4.png"];
             [cell.notification setHidden:YES];
@@ -157,15 +162,34 @@
 
     switch (indexPath.row) {
         case 0:
-            self.sidePanelController.centerPanel =[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
+            [SZUserUtils showUserSettingsInViewController:self.sidePanelController.centerPanel completion:^{
+                
+                SZUserSettings *settings = [SZUserUtils currentUserSettings];
+                
+                // Update the server
+                [SZUserUtils saveUserSettings:settings success:^(SZUserSettings *settings, id<SocializeFullUser> updatedUser) {
+                    PFUser *pf = [PFUser currentUser];
+                    pf.username  = settings.firstName;
+                    [pf saveInBackground];
+                    NSLog(@"Saved user %d", [updatedUser objectID]);
+                } failure:^(NSError *error) {
+                    NSLog(@"Broke: %@", [error localizedDescription]);
+                }];
+                
+            }];
+            
             break;
         case 1:
-            self.sidePanelController.centerPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"misanuncios"];
+    
+            self.sidePanelController.centerPanel =[self.storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
             break;
         case 2:
-            self.sidePanelController.centerPanel = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"chat"]];
+            self.sidePanelController.centerPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"misanuncios"];
             break;
         case 3:
+            self.sidePanelController.centerPanel = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"chat"]];
+            break;
+        case 4:
             [PFUser logOut];
             currentInstallation.channels = [NSArray array];
             [currentInstallation saveEventually];

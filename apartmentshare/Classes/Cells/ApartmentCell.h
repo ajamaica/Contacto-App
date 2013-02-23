@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) IBOutlet UILabel* locationLabel;
 
+@property (nonatomic, strong) IBOutlet UILabel* name;
+
 @property (nonatomic, strong) IBOutlet UILabel* priceLabel;
 
 @property (nonatomic, strong) IBOutlet UILabel* roomsLabel;
