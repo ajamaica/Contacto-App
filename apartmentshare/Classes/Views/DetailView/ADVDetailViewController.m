@@ -177,6 +177,8 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Chat"];
     [query whereKey:@"buyer" equalTo:[PFUser currentUser]];
     [query whereKey:@"anuncio" equalTo:self.apartment];
+    [query includeKey:@"buyer"];
+    [query includeKey:@"seller"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         PFObject *chat;
         if(!error){
@@ -187,7 +189,7 @@
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
                     [chatviewcontroller setChat:chat];
-                    chatviewcontroller.title = [NSString stringWithFormat:@"Chat de %@",self.title];
+                    chatviewcontroller.title = [[object objectForKey:@"seller"] username];
                     [self.navigationController pushViewController:chatviewcontroller animated:YES];
                 }else{
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -203,7 +205,7 @@
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     MDDemoViewController *chatviewcontroller = [[MDDemoViewController alloc] init];
                     [chatviewcontroller setChat:chat];
-                    chatviewcontroller.title = [NSString stringWithFormat:@"Chat de %@",self.title];
+                    chatviewcontroller.title = [[object objectForKey:@"seller"] username];
                     [self.navigationController pushViewController:chatviewcontroller animated:YES];
                 }else{
                     [MBProgressHUD hideHUDForView:self.view animated:YES];

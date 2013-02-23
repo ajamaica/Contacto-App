@@ -78,7 +78,7 @@
             break;
         case 1:
             cell.title.text = @"Listado";
-            cell.uiimage.image = [UIImage imageNamed:@"32.png"];
+            cell.uiimage.image = [UIImage imageNamed:@"15.png"];
             [cell.notification setHidden:YES];
             break;
         case 2:

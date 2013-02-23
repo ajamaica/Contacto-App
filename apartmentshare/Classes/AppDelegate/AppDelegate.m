@@ -28,6 +28,11 @@
     [Socialize storeConsumerSecret:@"807b3c94-a371-42e7-a111-a071fd5ca6dd"];
     [Socialize storeAnonymousAllowed:YES];
     
+    
+    [SZTwitterUtils setConsumerKey:@"1igIqTQDlkzcIWqS1dzIXQ" consumerSecret:@"08ocJnSFwwriWlUuPCvzlHXHkquCT7fsdckve4HM"];
+
+    [SZFacebookUtils setAppId:@"504782069564646"];
+    
     [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
                   clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
   
@@ -100,6 +105,10 @@
     return YES;
 }
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [Socialize handleOpenURL:url];
+}
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
