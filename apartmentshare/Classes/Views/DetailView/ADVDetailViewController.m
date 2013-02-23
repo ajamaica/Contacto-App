@@ -226,4 +226,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)close:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

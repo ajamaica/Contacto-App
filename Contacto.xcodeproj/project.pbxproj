@@ -2235,8 +2235,8 @@
 		EC99AC5E16B2E12C00ACDAFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Maria Eugenia Garcia H (9VB6VYHHM3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Maria Eugenia Garcia H (9VB6VYHHM3)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2252,8 +2252,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Contacto;
-				PROVISIONING_PROFILE = "36995316-77CC-4E2A-AE2A-02FAE3477FF5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "36995316-77CC-4E2A-AE2A-02FAE3477FF5";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};

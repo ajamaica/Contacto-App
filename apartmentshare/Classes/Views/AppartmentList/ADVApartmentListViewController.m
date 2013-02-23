@@ -92,16 +92,7 @@
     [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.apartmentTableView addSubview:refreshControl];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveTestNotification:)
-                                                 name:@"close"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(doquery)
-                                                 name:@"reload"
-                                               object:nil];
-    
+       
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGSize screenSize = screenBound.size;
     CGFloat screenHeight = screenSize.height;
@@ -175,6 +166,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTestNotification:)
+                                                 name:@"close"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(doquery)
+                                                 name:@"reload"
+                                               object:nil];
+
+    
     [self.apartmentTableView setContentOffset:CGPointMake(0, 44)];
     [self.title_btn setTitle:@"Listado ▾" forState:UIControlStateNormal];
     // self.navigationItem.leftBarButtonItem.title = [self getLogText];
@@ -490,7 +493,7 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     if([segue.identifier isEqualToString:@"detail"]){
  
         ADVDetailViewController* detail = (ADVDetailViewController*)segue.destinationViewController;
-        
+        detail.navigationItem.rightBarButtonItem =nil;
         NSIndexPath* indexPath = [self.apartmentTableView indexPathForSelectedRow];
         PFObject *apartment =[objects objectAtIndex:indexPath.row];
         

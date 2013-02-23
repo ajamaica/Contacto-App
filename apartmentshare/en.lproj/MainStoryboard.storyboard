@@ -219,7 +219,7 @@
         <!--Detail View Controller-->
         <scene sceneID="Ooe-ng-Pcs">
             <objects>
-                <viewController id="Bmc-KK-CUL" customClass="ADVDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detail" id="Bmc-KK-CUL" customClass="ADVDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aIv-hG-Eaf">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -333,7 +333,13 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="1SJ-uc-wgd"/>
+                    <navigationItem key="navigationItem" id="1SJ-uc-wgd">
+                        <barButtonItem key="rightBarButtonItem" title="Cerrar" id="ti2-HR-OUZ">
+                            <connections>
+                                <action selector="close:" destination="Bmc-KK-CUL" id="3QB-Zn-VMW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="apartmentImageView" destination="i8d-9J-BDe" id="CZD-bd-yn4"/>
                         <outlet property="apartmentTypeLabel" destination="Ru3-sX-fPY" id="8s9-P5-1de"/>
@@ -742,7 +748,7 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jct-bX-o2D">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sin mensajes..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jct-bX-o2D">
                                             <rect key="frame" x="53" y="27" width="217" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -949,6 +955,135 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
         <image name="cellimg.png" width="320" height="68"/>
         <image name="profile-stats-bg.png" width="320" height="158"/>
     </resources>
+    <classes>
+        <class className="ADVApartmentListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADVApartmentListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginLogoutPressed:"/>
+                <relationship kind="action" name="pressnavbar:"/>
+                <relationship kind="action" name="uploadPressed:"/>
+                <relationship kind="outlet" name="apartmentTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="container" candidateClass="UIView"/>
+                <relationship kind="outlet" name="title_btn" candidateClass="UIButton"/>
+                <relationship kind="outletCollection" name="navbar_btn" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ADVDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADVDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="apartmentImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="apartmentTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="contactButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="moreDetailsTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="moreDetailsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="roomsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="shadowView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="user" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ADVLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADVLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logInPressed:"/>
+                <relationship kind="action" name="signUpPressed:"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loginTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="signupButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="userTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ADVRegisterViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADVRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="signUpUserPressed:"/>
+                <relationship kind="outlet" name="signupButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ADVUploadImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADVUploadImageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="selectPicturePressed:"/>
+                <relationship kind="outlet" name="apartmentTypeControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="dataTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="descriptionTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="imageButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="locationTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="priceTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="roomsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="roomsSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="textview" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="uploadImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="ApartmentCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ApartmentCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="apartmentImageView" candidateClass="PFImageView"/>
+                <relationship kind="outlet" name="apartmentTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="remover" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="roomsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shadowView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="vendido" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="CategoryViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryViewController.h"/>
+        </class>
+        <class className="ChatViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
+        </class>
+        <class className="DetailsCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailsCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="JASidePanelController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JASidePanelController.h"/>
+        </class>
+        <class className="MensajesCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MensajesCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="description" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionB" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="imagen" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="titulo" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="MisAnunciosViewController" superclassName="ADVApartmentListViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MisAnunciosViewController.h"/>
+        </class>
+        <class className="MySidePanelControllerViewController" superclassName="JASidePanelController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MySidePanelControllerViewController.h"/>
+        </class>
+        <class className="PFImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
+        </class>
+        <class className="PFQueryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
+        </class>
+        <class className="SidebarCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SidebarCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="notification" candidateClass="UIView"/>
+                <relationship kind="outlet" name="number" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="uiimage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="SidebarViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SidebarViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -956,7 +1091,7 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="gPR-Zw-yXn"/>
-        <segue reference="pcs-Ki-CkH"/>
-        <segue reference="jgK-Ai-ZrG"/>
+        <segue reference="gAD-5L-D3x"/>
+        <segue reference="gA2-dX-8i1"/>
     </inferredMetricsTieBreakers>
 </document>

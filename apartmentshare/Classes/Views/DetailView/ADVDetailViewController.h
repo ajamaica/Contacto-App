@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) IBOutlet UIView* shadowView;
 
+- (IBAction)close:(id)sender;
 @property (nonatomic, weak) IBOutlet UIButton* contactButton;
 
 @property (nonatomic, weak) IBOutlet UIView* moreDetailsView;

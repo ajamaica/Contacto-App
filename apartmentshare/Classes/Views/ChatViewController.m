@@ -196,6 +196,7 @@
          cell.titulo.text = [object objectForKey:@"title"];
      }];
 
+     if([object objectForKey:@"last_ms"]){
      if([[[PFUser currentUser] objectId] isEqualToString:[[object objectForKey:@"last_usr"] objectId]]){
          
          cell.description.text = [NSString stringWithFormat:@"➡ %@",[object objectForKey:@"last_ms"]];
@@ -203,7 +204,7 @@
      }else{
          cell.description.text = [NSString stringWithFormat:@"⬅ %@",[object objectForKey:@"last_ms"]];
      }
-     
+     }
           
      PFFile *f = [[object objectForKey:@"anuncio"] objectForKey:@"imagen"];
      [cell.imagen setImageWithURL:[NSURL URLWithString: f.url]];

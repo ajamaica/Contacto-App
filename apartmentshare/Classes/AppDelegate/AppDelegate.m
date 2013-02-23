@@ -12,6 +12,7 @@
 #import "MySidePanelControllerViewController.h"
 #import "MDDemoViewController.h"
 #import "JASidePanelController.h"
+#import "ADVDetailViewController.h"
 
 @implementation AppDelegate
 
@@ -29,9 +30,9 @@
     [Socialize storeAnonymousAllowed:YES];
     
     
-    [SZTwitterUtils setConsumerKey:@"1igIqTQDlkzcIWqS1dzIXQ" consumerSecret:@"08ocJnSFwwriWlUuPCvzlHXHkquCT7fsdckve4HM"];
+    //[SZTwitterUtils setConsumerKey:@"1igIqTQDlkzcIWqS1dzIXQ" consumerSecret:@"08ocJnSFwwriWlUuPCvzlHXHkquCT7fsdckve4HM"];
 
-    [SZFacebookUtils setAppId:@"504782069564646"];
+    //[SZFacebookUtils setAppId:@"504782069564646"];
     
     [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
                   clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
@@ -85,14 +86,25 @@
     
     [Socialize setEntityLoaderBlock:^(UINavigationController *navigationController, id<SocializeEntity>entity) {
         
-        SampleEntityLoader *entityLoader = [[SampleEntityLoader alloc] initWithEntity:entity];
+        ADVDetailViewController *entityLoader = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"detail"];
         
-        if (navigationController == nil) {
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:entityLoader];
-            [self.window.rootViewController presentModalViewController:navigationController animated:YES];
-        } else {
-            [navigationController pushViewController:entityLoader animated:YES];
-        }
+        PFObject *targetPhoto = [PFObject objectWithoutDataWithClassName:@"Anuncio"
+                                                                objectId:[entity key]];
+        
+        [targetPhoto fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if(error){
+                return;
+            }
+            [entityLoader setApartment:object];
+            if (navigationController == nil) {
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:entityLoader];
+                [self.window.rootViewController presentModalViewController:navigationController animated:YES];
+            } else {
+                [navigationController pushViewController:entityLoader animated:YES];
+                
+            }
+        }];
+        
     }];
 
     
@@ -185,6 +197,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
+    
+#if DEBUG
+    [SZSmartAlertUtils registerDeviceToken:deviceToken development:YES];
+#else
+    [SZSmartAlertUtils registerDeviceToken:deviceToken development:NO];
+#endif
 }
 
 -(void)logout{
