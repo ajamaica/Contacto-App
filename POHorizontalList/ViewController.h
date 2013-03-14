@@ -12,10 +12,11 @@
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, POHorizontalListDelegate> {
     NSMutableArray *itemArray;
     
-    NSMutableArray *freeList;
-    NSMutableArray *paidList;
-    NSMutableArray *grossingList;
+    NSMutableArray *destacados;
+    NSMutableArray *cercanos;
+    NSMutableArray *mistiendas;
 }
+- (IBAction)nuevatienda:(id)sender;
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 

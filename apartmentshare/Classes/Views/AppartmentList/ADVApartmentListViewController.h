@@ -24,5 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIView *container;
 @property (weak, nonatomic) IBOutlet UIButton *title_btn;
 
+@property (strong, nonatomic) IBOutlet UIRefreshControl *refreshControl;
+@property ( nonatomic) IBOutlet  BOOL loading;
+@property (strong, nonatomic) NSArray *objects;
+- (void)doquery;
 
 @end

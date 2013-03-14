@@ -7,7 +7,13 @@
 //
 
 #import "ADVApartmentListViewController.h"
+#import "AGMedallionView.h"
 
 @interface TiendaViewController : ADVApartmentListViewController
+@property (weak, nonatomic) IBOutlet AGMedallionView *logo;
+@property (weak, nonatomic) IBOutlet MKMapView *mapview;
+@property (weak, nonatomic) IBOutlet UILabel *lugarlabel;
+@property (strong, nonatomic) IBOutlet PFObject *tienda;
+
 
 @end

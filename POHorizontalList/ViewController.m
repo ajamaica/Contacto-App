@@ -7,45 +7,130 @@
 //
 
 #import "ViewController.h"
+#import "TiendaViewController.h"
 
-@interface ViewController ()
+@interface ViewController (){
+    BOOL isloading1;
+    BOOL isloading2;
+    BOOL isloading3;
+    UIRefreshControl *refreshControl;
+
+    PFObject *tienda;
+}
 
 @end
 
 @implementation ViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if (self) {
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if(self){
+        isloading1 =YES;
+        isloading2 =YES;
+        isloading3 =YES;
+
         
-        ListItem *item1 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"5_64x64.png"] text:@"Weather"];
-        ListItem *item2 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"6_64x64.png"] text:@"Shopping"];
-        ListItem *item3 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"7_64x64.png"] text:@"E-Trade"];
-        ListItem *item4 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"8_64x64.png"] text:@"Voice Recorder"];
-        ListItem *item5 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"9_64x64.png"] text:@"News Reader"];
-        ListItem *item6 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"10_64x64.png"] text:@"Game Pack"];
-        ListItem *item7 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"11_64x64.png"] text:@"Movies"];
-        ListItem *item8 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"12_64x64.png"] text:@"Forecast"];
-        ListItem *item9 = [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"10_64x64.png"] text:@"Game Pack"];
-        ListItem *item10= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"11_64x64.png"] text:@"Movies"];
-        ListItem *item11= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"9_64x64.png"] text:@"News Reader"];
-        ListItem *item12= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"8_64x64.png"] text:@"Voice Recorder"];
-        ListItem *item13= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"7_64x64.png"] text:@"E-Trade"];
-        ListItem *item14= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"6_64x64.png"] text:@"Shopping"];
-        ListItem *item15= [[ListItem alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"5_64x64.png"] text:@"Weather"];
         
-        freeList = [[NSMutableArray alloc] initWithObjects: item1, item2, item3, item4, item5, nil];
-        paidList = [[NSMutableArray alloc] initWithObjects: item6, item7, item8, item9, item10, nil];
-        grossingList = [[NSMutableArray alloc] initWithObjects: item11, item12, item13, item14, item15, nil];
+
     }
-    
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTestNotification:)
+                                                 name:@"reloadpurchase"
+                                               object:nil];
+}
+
+-(void)handleRefresh:(id)sender{
+    PFQuery *queredestacados = [PFQuery queryWithClassName:@"Tiendas"];
+    
+    [queredestacados whereKey:@"destacada" equalTo:[NSNumber numberWithBool:YES]];
+    
+
+    
+    [queredestacados findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            
+            destacados = [[NSMutableArray alloc] initWithCapacity:objects.count];
+            
+            for (PFObject *t in objects) {
+                PFFile *pf = [t objectForKey:@"logo"];
+                NSString *s =@"";
+                if(pf){
+                    s = pf.url;
+                }
+                [destacados addObject:[[ListItem alloc] initWithFrame:CGRectZero urlimage:[NSURL URLWithString:s] text:[t objectForKey:@"nombre"] withobject:t]];
+            }
+        }
+        isloading1 = NO;
+        [self.tableView reloadData];
+        
+    }];
+    
+    PFQuery *querycercanos = [PFQuery queryWithClassName:@"Tiendas"];
+    
+    if([[PFUser currentUser] objectForKey:@"location"]){
+        [querycercanos whereKey:@"location" nearGeoPoint:[[PFUser currentUser] objectForKey:@"location"] withinKilometers:30.0f];
+    }
+    
+    [querycercanos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            cercanos = [[NSMutableArray alloc] initWithCapacity:objects.count];
+            
+            for (PFObject *t in objects) {
+                PFFile *pf = [t objectForKey:@"logo"];
+                NSString *s =@"";
+                if(pf){
+                    s = pf.url;
+                }
+                [cercanos addObject:[[ListItem alloc] initWithFrame:CGRectZero urlimage:[NSURL URLWithString:s] text:[t objectForKey:@"nombre"] withobject:t]];            }
+        }
+        isloading2 =NO;
+        [self.tableView reloadData];
+        
+    }];
+    
+    
+    PFQuery *querymistiendas = [PFQuery queryWithClassName:@"Tiendas"];
+    
+    [querymistiendas whereKey:@"user" equalTo:[PFUser currentUser]];
+    
+    [querymistiendas findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            mistiendas = [[NSMutableArray alloc] initWithCapacity:objects.count];
+            for (PFObject *t in objects) {
+                PFFile *pf = [t objectForKey:@"logo"];
+                NSString *s =@"";
+                if(pf){
+                    s = pf.url;
+                }
+                
+                [mistiendas addObject:[[ListItem alloc] initWithFrame:CGRectZero urlimage:[NSURL URLWithString:s] text:[t objectForKey:@"nombre"] withobject:t]];            }
+        }
+        isloading3 =NO;
+        [self.tableView reloadData];
+        [refreshControl endRefreshing];
+    }];
+    
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Tiendas";
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Tira para recargar."];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+
+    [self.tableView addSubview:refreshControl];
+    [self handleRefresh:self];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -56,15 +141,21 @@
 }
 
 - (int)numberOfSectionsInTableView:(UITableView *)tableView {
+    if(isloading1 && isloading2 && isloading3){
+        return 0;
+    }
     return 1;
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(isloading1 && isloading2 && isloading3){
+        return 0;
+    }
     return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 155.0;
+    return 175.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -80,19 +171,19 @@
     POHorizontalList *list;
     
     if ([indexPath row] == 0) {
-        title = @"Top Free";
+        title = @"Tiendas Destacadas";
         
-        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 155.0) title:title items:freeList];
+        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 175.0) title:title items:destacados];
     }
     else if ([indexPath row] == 1) {
-        title = @"Top Paid";
+        title = @"Tiendas Cercanas";
         
-        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 155.0) title:title items:paidList];
+        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 175.0) title:title items:cercanos];
     }
     else if ([indexPath row] == 2) {
-        title = @"Top Grossing";
+        title = @"Mis Tiendas";
         
-        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 155.0) title:title items:grossingList];
+        list = [[POHorizontalList alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 175.0) title:title items:mistiendas];
     }
     
     [list setDelegate:self];
@@ -104,6 +195,35 @@
 #pragma mark  POHorizontalListDelegate
 
 - (void) didSelectItem:(ListItem *)item {
-    NSLog(@"Horizontal List Item %@ selected", item.imageTitle);
+
+    tienda = item.tienda;
+    [self performSegueWithIdentifier:@"adsstore" sender:self];
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"adsstore"]){
+
+        TiendaViewController *vc = [segue destinationViewController];
+        [vc setTitle:[tienda objectForKey:@"nombre"]];
+        
+        [vc setTienda: tienda];
+
+    }
+}
+
+- (IBAction)nuevatienda:(id)sender {
+    
+    [PFPurchase buyProduct:@"com.brounie.contacto.tienda" block:^(NSError *error) {
+        if (!error) {
+
+        }
+    }];
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

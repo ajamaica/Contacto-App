@@ -18,7 +18,7 @@
 
 @property (nonatomic, retain) NSString *imageTitle;
 @property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) PFObject *tienda;
 
-- (id)initWithFrame:(CGRect)frame image:(UIImage *)image text:(NSString *)imageTitle;
-
+- (id)initWithFrame:(CGRect)frame urlimage:(NSURL *)url text:(NSString *)imageTitle withobject:(PFObject *)tienda;
 @end

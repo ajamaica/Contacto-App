@@ -13,6 +13,7 @@
 #import "MDDemoViewController.h"
 #import "JASidePanelController.h"
 #import "ADVDetailViewController.h"
+#import "MBProgressHUD.h"
 
 @implementation AppDelegate
 
@@ -25,17 +26,14 @@
     
     [ADVThemeManager customizeAppAppearance];
     
-    [Socialize storeConsumerKey:@"945ba670-6934-4192-a08e-ee1860af9096"];
-    [Socialize storeConsumerSecret:@"807b3c94-a371-42e7-a111-a071fd5ca6dd"];
+    [Socialize storeConsumerKey:@"YOUR OWN KEY"];
+    [Socialize storeConsumerSecret:@"YOUR OWN KEY"];
     [Socialize storeAnonymousAllowed:YES];
     
     
-    //[SZTwitterUtils setConsumerKey:@"1igIqTQDlkzcIWqS1dzIXQ" consumerSecret:@"08ocJnSFwwriWlUuPCvzlHXHkquCT7fsdckve4HM"];
 
-    //[SZFacebookUtils setAppId:@"504782069564646"];
-    
-    [Parse setApplicationId:@"9WcDOFquwPQxQDdYi3mrSkYyBPBbJ73ZPnu9X3p4"
-                  clientKey:@"9EOYnPWrIeIDpmCoeW2ywBh7IalKcnreknpSA1la"];
+    [Parse setApplicationId:@"YOUR OWN KEY"
+                  clientKey:@"YOUR OWN KEY"];
   
    
 
@@ -114,6 +112,25 @@
         
                 
     }
+    
+    [PFPurchase addObserverForProduct:@"com.brounie.contacto.tienda" block:^(SKPaymentTransaction *transaction) {
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+        hud.labelText = @"Loading";
+        
+        PFObject *tienda = [PFObject objectWithClassName:@"Tiendas"];
+        [tienda setObject:@"Nueva Tienda" forKey:@"nombre"];
+        [tienda setObject:[PFUser currentUser] forKey:@"user"];
+        [tienda setObject:[[PFUser currentUser]objectForKey:@"location"] forKey:@"location"];
+        [tienda saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [MBProgressHUD hideHUDForView:self.window.rootViewController.view animated:YES];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"reloadpurchase" object:nil userInfo:nil];
+
+        }];
+        
+    }];
+    
     return YES;
 }
 

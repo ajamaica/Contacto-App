@@ -22,7 +22,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.brounie.in.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.brounie.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -52,8 +52,7 @@
 			<string>facebook</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb</string>
-				<string>504782069564646</string>
+				<string>fb504782069564646</string>
 			</array>
 		</dict>
 	</array>

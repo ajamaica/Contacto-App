@@ -22,10 +22,8 @@
 @interface ADVApartmentListViewController () {
     NSNumber *latestDate;
     BOOL abierto;
-    BOOL loading;
-    NSArray *objects;
+    
     PFObject *category;
-    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, retain) NSArray *apartments;
@@ -43,6 +41,9 @@
 }
 @synthesize locationManager;
 @synthesize searchResults;
+@synthesize refreshControl;
+@synthesize loading;
+@synthesize objects;
 
 - (AppDelegate *)appDelegate {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -192,9 +193,13 @@
     
     
     loading = TRUE;
-    [self doquery];
+    
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self doquery];
+}
 
 - (void)doquery{
     PFQuery *query = [PFQuery queryWithClassName:@"Anuncio"];

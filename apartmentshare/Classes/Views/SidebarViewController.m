@@ -12,6 +12,7 @@
 #import "SSMessagesViewController.h"
 #import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ViewController.h"
 
 @interface SidebarViewController ()
 
@@ -62,7 +63,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 5;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -93,13 +94,13 @@
             [cell.notification.layer setMasksToBounds:YES];
             break;
         case 4:
-            cell.title.text = @"Salir";
+            cell.title.text = @"Tiendas";
             cell.uiimage.image = [UIImage imageNamed:@"4.png"];
             [cell.notification setHidden:YES];
             break;
         case 5:
-            cell.title.text = @"Mis Datos";
-            cell.uiimage.image = [UIImage imageNamed:@"32.png"];
+            cell.title.text = @"Salir";
+            cell.uiimage.image = [UIImage imageNamed:@"4.png"];
             [cell.notification setHidden:YES];
             break;
 
@@ -190,6 +191,9 @@
             self.sidePanelController.centerPanel = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"chat"]];
             break;
         case 4:
+            self.sidePanelController.centerPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"tiendas"];
+            break;
+        case 5:
             [PFUser logOut];
             currentInstallation.channels = [NSArray array];
             [currentInstallation saveEventually];

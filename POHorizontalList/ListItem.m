@@ -7,25 +7,29 @@
 //
 
 #import "ListItem.h"
-
+#import "UIImageView+WebCache.h"
 @implementation ListItem
 
-- (id)initWithFrame:(CGRect)frame image:(UIImage *)image text:(NSString *)imageTitle
+- (id)initWithFrame:(CGRect)frame urlimage:(NSURL *)url text:(NSString *)imageTitle withobject:(PFObject *)tienda
 {
     self = [super initWithFrame:frame];
     
     if (self) {
+        
+        
         [self setUserInteractionEnabled:YES];
         
         self.imageTitle = imageTitle;
-        self.image = image;
+        self.tienda = tienda;
+        UIImageView *imageView = [[UIImageView alloc] init];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-
+        if(url){
+            [imageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"7_64x64.png"]];
+        }
         CALayer *roundCorner = [imageView layer];
         [roundCorner setMasksToBounds:YES];
         [roundCorner setCornerRadius:8.0];
-        [roundCorner setBorderColor:[UIColor blackColor].CGColor];
+        [roundCorner setBorderColor:[UIColor clearColor].CGColor];
         [roundCorner setBorderWidth:1.0];
         
         UILabel *title = [[UILabel alloc] init];

@@ -678,7 +678,7 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMG-lZ-Vbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2312" y="648"/>
+            <point key="canvasLocation" x="2462" y="762"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="oLH-s7-hCa">
@@ -879,6 +879,43 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
             </objects>
             <point key="canvasLocation" x="3248" y="275"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="cxa-3i-4Hy">
+            <objects>
+                <viewController storyboardIdentifier="" id="dOg-Kl-rG1" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VHW-Ca-K0H">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nqe-LL-PVP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="dOg-Kl-rG1" id="PRn-VO-gre"/>
+                                    <outlet property="delegate" destination="dOg-Kl-rG1" id="DIV-od-fHf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6d4-kS-qcm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="va4-He-bcO">
+                            <connections>
+                                <action selector="nuevatienda:" destination="dOg-Kl-rG1" id="LTH-uJ-QpE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="tableView" destination="nqe-LL-PVP" id="e6z-kA-m4d"/>
+                        <segue destination="z4m-5H-Gpk" kind="push" identifier="adsstore" id="gza-z7-9dg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sdX-Ww-mnv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3717" y="1055"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eiw-73-YTE">
             <objects>
@@ -895,7 +932,7 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XX6-bh-nfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2731" y="346"/>
+            <point key="canvasLocation" x="2815" y="336"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gDy-PU-Hyr">
@@ -943,6 +980,253 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWk-dG-JnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="b94-vu-oZO">
+            <objects>
+                <navigationController storyboardIdentifier="tiendas" id="MST-Bg-mF8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="r1q-Rq-XQw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dOg-Kl-rG1" kind="relationship" relationship="rootViewController" id="nuA-6c-5B4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rF8-2F-l3i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3191" y="1055"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Pd7-FF-N9T">
+            <objects>
+                <viewController id="hZs-GW-0jA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jL4-Tb-l7a">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Ysn-SI-eTL">
+                                <rect key="frame" x="35" y="20" width="250" height="167"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="camera-select.png" id="TyF-nl-xCe">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="167"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a4w-xc-9CF">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="167"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rMk-mk-TJ8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i3h-ca-Fi2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3968" y="381"/>
+        </scene>
+        <!--Tienda View Controller - First-->
+        <scene sceneID="Pti-N2-aSi">
+            <objects>
+                <viewController storyboardIdentifier="" title="First" id="z4m-5H-Gpk" customClass="TiendaViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xnL-YS-jvL">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="251" sectionHeaderHeight="22" sectionFooterHeight="22" id="3yP-kc-pgd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="S05-Ad-9dz">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="208"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" id="CFX-ZB-Per">
+                                            <rect key="frame" x="0.0" y="44" width="320" height="158"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        </mapView>
+                                        <searchBar contentMode="redraw" id="o3G-iN-YEJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </searchBar>
+                                        <view contentMode="scaleToFill" id="K4L-Ch-fb5" customClass="AGMedallionView">
+                                            <rect key="frame" x="110" y="55" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" image="profile-stats-bg.png" id="969-uC-nZ0">
+                                            <rect key="frame" x="0.0" y="202" width="320" height="6"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IfD-A9-NoC">
+                                            <rect key="frame" x="0.0" y="44" width="320" height="159"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <state key="normal">
+                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="xe2-c0-4zf" kind="modal" modalTransitionStyle="partialCurl" id="MBx-Ru-yja"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ApartmentCell" rowHeight="251" id="cIA-fs-7oC" customClass="ApartmentCell">
+                                        <rect key="frame" x="0.0" y="230" width="320" height="251"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="profile-stats-bg.png" id="v6N-U9-VvX">
+                                                    <rect key="frame" x="0.0" y="87" width="320" height="158"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" id="Ck8-uc-jWs" customClass="PFImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="198"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$750,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cZx-Xt-4zn">
+                                                    <rect key="frame" x="6" y="209" width="96" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venta" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KRJ-VP-lMy">
+                                                    <rect key="frame" x="125" y="208" width="71" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Muebles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aJp-ZD-r2H">
+                                                    <rect key="frame" x="236" y="209" width="71" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="The Cloister, London" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gtj-jo-Fck">
+                                                    <rect key="frame" x="6" y="168" width="286" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Arturo Jamaica" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FEP-aP-G9R">
+                                                    <rect key="frame" x="-17" y="4" width="301" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32.png" id="5oL-Dq-oGF">
+                                                    <rect key="frame" x="291" y="7" width="16" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="apartmentImageView" destination="Ck8-uc-jWs" id="Rpy-Q0-BuY"/>
+                                            <outlet property="apartmentTypeLabel" destination="aJp-ZD-r2H" id="xRa-9f-KqY"/>
+                                            <outlet property="locationLabel" destination="Gtj-jo-Fck" id="t6B-kH-CXM"/>
+                                            <outlet property="name" destination="FEP-aP-G9R" id="Fql-8t-4R3"/>
+                                            <outlet property="priceLabel" destination="cZx-Xt-4zn" id="c7Y-LD-nJt"/>
+                                            <outlet property="roomsLabel" destination="KRJ-VP-lMy" id="5Jo-7t-lrw"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="G16-MB-nqj">
+                        <nil key="title"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="apartmentTableView" destination="3yP-kc-pgd" id="5NG-lH-CBh"/>
+                        <outlet property="logo" destination="K4L-Ch-fb5" id="P8H-bR-4I9"/>
+                        <outlet property="mapview" destination="CFX-ZB-Per" id="e3q-wH-zQ7"/>
+                        <outlet property="searchDisplayController" destination="hsZ-oF-QuK" id="mJb-xE-Rlo"/>
+                        <segue destination="Bmc-KK-CUL" kind="push" identifier="detail" id="vBc-HK-qyq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eS1-Wm-JCX" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="N7g-SL-tPP">
+                    <connections>
+                        <outlet property="delegate" destination="z4m-5H-Gpk" id="prp-Ho-W72"/>
+                        <outlet property="searchBar" destination="o3G-iN-YEJ" id="9yf-9W-Wkr"/>
+                        <outlet property="searchContentsController" destination="z4m-5H-Gpk" id="IKQ-fo-zq0"/>
+                        <outlet property="searchResultsDataSource" destination="z4m-5H-Gpk" id="WVv-M5-0ob"/>
+                        <outlet property="searchResultsDelegate" destination="z4m-5H-Gpk" id="jpL-ym-M6E"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="4223" y="1055"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="2gf-9D-qPG">
+            <objects>
+                <viewController id="xe2-c0-4zf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AP9-wF-MgP">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="XA2-Ap-OAE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="EWV-RU-doq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wML-TY-ULB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4797" y="1055"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="jkc-48-DUy">
+            <objects>
+                <viewController id="TX1-HJ-qWp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wNX-Ja-d45">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yZZ-cg-ZQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="15.png" width="16" height="16"/>
@@ -964,6 +1248,7 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                 <relationship kind="action" name="uploadPressed:"/>
                 <relationship kind="outlet" name="apartmentTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="container" candidateClass="UIView"/>
+                <relationship kind="outlet" name="refreshControl" candidateClass="UIRefreshControl"/>
                 <relationship kind="outlet" name="title_btn" candidateClass="UIButton"/>
                 <relationship kind="outletCollection" name="navbar_btn" candidateClass="UIButton"/>
             </relationships>
@@ -1021,6 +1306,9 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
                 <relationship kind="outlet" name="uploadImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
+        <class className="AGMedallionView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AGMedallionView.h"/>
+        </class>
         <class className="ApartmentCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ApartmentCell.h"/>
             <relationships>
@@ -1068,6 +1356,9 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
         <class className="PFImageView" superclassName="UIImageView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
         </class>
+        <class className="PFObject" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFObject.h"/>
+        </class>
         <class className="PFQueryTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
         </class>
@@ -1083,6 +1374,25 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
         <class className="SidebarViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SidebarViewController.h"/>
         </class>
+        <class className="TiendaViewController" superclassName="ADVApartmentListViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TiendaViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logo" candidateClass="AGMedallionView"/>
+                <relationship kind="outlet" name="lugarlabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapview" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="tienda" candidateClass="PFObject"/>
+            </relationships>
+        </class>
+        <class className="UIRefreshControl" superclassName="UIControl">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIRefreshControl.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="nuevatienda:"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -1090,8 +1400,8 @@ It is divided into two wings, the five bedrooms being found in the city wing, wh
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="jgK-Ai-ZrG"/>
+        <segue reference="vBc-HK-qyq"/>
         <segue reference="gPR-Zw-yXn"/>
-        <segue reference="gAD-5L-D3x"/>
-        <segue reference="gA2-dX-8i1"/>
     </inferredMetricsTieBreakers>
 </document>
