@@ -374,6 +374,7 @@
 		816E88DE16D8939B00ABE235 /* SZStatusImageLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 816E880116D8939B00ABE235 /* SZStatusImageLabelView.xib */; };
 		816E88DF16D8939B00ABE235 /* Socialize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816E880216D8939B00ABE235 /* Socialize.framework */; };
 		816E88E316D893D300ABE235 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816E88E216D893D300ABE235 /* MessageUI.framework */; };
+		8185831716F1A27200F7332A /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = 8185831616F1A27200F7332A /* Readme */; };
 		81A4668D16E07E400046546B /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A4668916E07E400046546B /* ListItem.m */; };
 		81A4668E16E07E400046546B /* POHorizontalList.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A4668B16E07E400046546B /* POHorizontalList.m */; };
 		81A4669116E07EA00046546B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A4669016E07EA00046546B /* ViewController.m */; };
@@ -860,6 +861,7 @@
 		816E880116D8939B00ABE235 /* SZStatusImageLabelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SZStatusImageLabelView.xib; sourceTree = "<group>"; };
 		816E880216D8939B00ABE235 /* Socialize.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Socialize.framework; sourceTree = "<group>"; };
 		816E88E216D893D300ABE235 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8185831616F1A27200F7332A /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		81A4668816E07E400046546B /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
 		81A4668916E07E400046546B /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItem.m; sourceTree = "<group>"; };
 		81A4668A16E07E400046546B /* POHorizontalList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POHorizontalList.h; sourceTree = "<group>"; };
@@ -1711,6 +1713,7 @@
 		EC99AC2316B2E12B00ACDAFA = {
 			isa = PBXGroup;
 			children = (
+				8185831616F1A27200F7332A /* Readme */,
 				81A466AD16E10B620046546B /* AGMedallionView */,
 				81A4668716E07E400046546B /* POHorizontalList */,
 				816E86D116D8754C00ABE235 /* Viewscards */,
@@ -2203,6 +2206,7 @@
 				81A466A816E07ED80046546B /* 9_64x64.png in Resources */,
 				81A466B216E10B700046546B /* flor.png in Resources */,
 				81A466B416E116B10046546B /* sb.png in Resources */,
+				8185831716F1A27200F7332A /* Readme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
