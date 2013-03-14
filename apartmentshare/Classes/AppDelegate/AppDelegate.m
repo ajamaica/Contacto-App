@@ -29,7 +29,7 @@
     [Socialize storeConsumerKey:@"YOUR OWN KEY"];
     [Socialize storeConsumerSecret:@"YOUR OWN KEY"];
     [Socialize storeAnonymousAllowed:YES];
-    
+
     
 
     [Parse setApplicationId:@"YOUR OWN KEY"
